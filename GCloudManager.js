@@ -8,34 +8,6 @@ class GCloudManager {
     });
   }
 
-  async createTopic(topicName) {
-    const [topic] = await this.pubsub.createTopic(topicName);
-    console.log(`Topic ${topic.name} created.`);
-    return topic;
-  }
-
-  async deleteTopic(topicName) {
-    const topic = this.pubsub.topic(topicName);
-    await topic.delete();
-    console.log(`Topic ${topic.name} deleted.`);
-  }
-
-  async createSubscription(topicName, subscriptionName) {
-    const topic = this.pubsub.topic(topicName);
-    const [subscription] = await topic.createSubscription(subscriptionName);
-    console.log(
-      `Subscription ${subscription.name} created. In topic ${topic.name}`
-    );
-    return subscription;
-  }
-
-  async deleteSubscription(topicName, subscriptionName) {
-    const topic = this.pubsub.topic(topicName);
-    const subscription = topic.subscription(subscriptionName);
-    await subscription.delete();
-    console.log(`Subscription ${subscription.name} deleted.`);
-  }
-
   listenForMessages(topicName, subscriptionName, messageHandler, errorHandler) {
     const topic = this.pubsub.topic(topicName);
     const subscription = topic.subscription(subscriptionName);
